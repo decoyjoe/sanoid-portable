@@ -1,0 +1,21 @@
+{
+  "apperl_configs": {
+    "sanoid-portable": {
+      "desc": "Portable sanoid binary",
+      "base": "full",
+      "dest": "sanoid",
+      "default_script": "/zip/bin/sanoid",
+      "install_modules": [
+        "Module-Build-0.4234.tar.gz",
+        "Config-IniFiles-3.000003.tar.gz",
+        "Capture-Tiny-0.48.tar.gz"
+      ],
+      "zip_extra_files": {
+        "bin": [
+          "sanoid_source/sanoid"
+        ]
+      }
+    }
+  },
+  "defaultconfig": "sanoid-portable"
+}
