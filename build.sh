@@ -74,6 +74,7 @@ echo 'Building sanoid-portable...'
 ./apperlm build
 
 stat sanoid-portable
+./sanoid-portable
 
 # APPerl uses the invoking command name (argv[0]) to determine which internal script to run
 ln -s sanoid-portable sanoid
