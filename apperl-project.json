@@ -12,7 +12,9 @@
       ],
       "zip_extra_files": {
         "bin": [
-          "sanoid_source/sanoid"
+          "sanoid_source/sanoid",
+          "sanoid_source/syncoid",
+          "sanoid_source/findoid"
         ]
       }
     }

@@ -73,14 +73,27 @@ echo 'Building sanoid-portable...'
 ./apperlm build
 
 stat sanoid
+ln -s sanoid syncoid
+ln -s sanoid findoid
 
 echo ''
 echo 'Build complete.'
-echo 'Executing sanoid binary...'
 echo ''
 
-./sanoid -h
 ./sanoid --version
+echo ''
+
+echo 'Testing execution of sanoid...'
+./sanoid --help
+echo ''
+
+echo 'Testing execution of syncoid...'
+./syncoid --help
+echo ''
+
+echo 'Testing execution of findoid...'
+./findoid --help
+echo ''
 
 echo 'SHA-256 checksum:'
 sha256sum sanoid
