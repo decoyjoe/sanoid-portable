@@ -59,6 +59,7 @@ echo ''
 ln -s perl.com apperlm
 
 cp "${repo_root}/apperl-project.json" .
+cp "${repo_root}/sanoid-portable.pl" .
 
 echo 'Installing build dependencies...'
 ./apperlm install-build-deps
@@ -72,9 +73,12 @@ echo 'Configuring build environment...'
 echo 'Building sanoid-portable...'
 ./apperlm build
 
-stat sanoid
-ln -s sanoid syncoid
-ln -s sanoid findoid
+stat sanoid-portable
+
+# APPerl uses the invoking command name (argv[0]) to determine which internal script to run
+ln -s sanoid-portable sanoid
+ln -s sanoid-portable syncoid
+ln -s sanoid-portable findoid
 
 echo ''
 echo 'Build complete.'
@@ -96,6 +100,6 @@ echo 'Testing execution of findoid...'
 echo ''
 
 echo 'SHA-256 checksum:'
-sha256sum sanoid
+sha256sum sanoid-portable
 
 popd > /dev/null
