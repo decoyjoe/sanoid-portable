@@ -5,7 +5,7 @@ Run [Sanoid](https://github.com/jimsalterjrs/sanoid) without installing any depe
 
 ## Summary
 
-sanoid-portable is a self-contained,  portable build of the [Sanoid](https://github.com/jimsalterjrs/sanoid) ZFS
+*sanoid-portable* is a self-contained,  portable build of the [Sanoid](https://github.com/jimsalterjrs/sanoid) ZFS
 snapshot management tool. Built using [APPerl (Actually Portable Perl)](https://computoid.com/APPerl/), this
 self-contained, portable binary encompasses the Perl runtime, all required Perl dependencies, and the Sanoid script
 itself. This enables you to run Sanoid on any Linux or FreeBSD system without needing to install additional Perl
@@ -23,8 +23,8 @@ wget https://github.com/decoyjoe/sanoid-portable/releases/latest/download/sanoid
 chmod +x sanoid-portable
 ```
 
-Since sanoid-portable uses the invoking command name (`argv[0]`) to determine its behavior, create symbolic links for each
-tool you plan to use:
+Since sanoid-portable uses the invoking command name (`argv[0]`) to determine its behavior, create symbolic links for
+each tool you plan to use:
 
 ```console
 ln -s sanoid-portable sanoid
@@ -46,7 +46,8 @@ Refer to the [Sanoid documentation](https://github.com/jimsalterjrs/sanoid) for 
 
 ## Developing
 
-Run the initialization script to prepare your environment to build the sanoid-portable executable on a Debian-based system:
+Run the initialization script to prepare your environment to build the sanoid-portable executable on a Debian-based
+system:
 
 ```console
 ./init.sh
