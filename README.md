@@ -23,8 +23,8 @@ wget https://github.com/decoyjoe/sanoid-portable/releases/latest/download/sanoid
 chmod +x sanoid-portable
 ```
 
-Since sanoid-portable uses the invoking command name (`argv[0]`) to determine its behavior, create symbolic links for
-each tool you plan to use:
+Create symbolic links for each tool you plan to use (sanoid-portable uses the invoking command name (`argv[0]`) to
+determine its behavior):
 
 ```console
 ln -s sanoid-portable sanoid
@@ -43,6 +43,12 @@ Invoke the symbolic link:
 ```
 
 Refer to the [Sanoid documentation](https://github.com/jimsalterjrs/sanoid) for configuration instructions.
+
+### Important Compatibility Note
+
+sanoid-portable ***must*** be run from a Thompson Shell-compatible shell such as `bash` ([due to a limitation of
+APPerl](https://computoid.com/APPerl/)). It is *not* compatible with shells like `zsh` or `fish`, which will fail to run
+sanoid-portable with an error such as: `zsh: exec format error: sanoid-portable`.
 
 ## Developing
 
