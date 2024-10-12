@@ -73,6 +73,10 @@ echo 'Configuring build environment...'
 echo 'Building sanoid-portable...'
 ./apperlm build
 
+echo ''
+echo 'Build complete.'
+echo ''
+
 stat sanoid-portable
 ./sanoid-portable
 
@@ -80,10 +84,6 @@ stat sanoid-portable
 ln -s sanoid-portable sanoid
 ln -s sanoid-portable syncoid
 ln -s sanoid-portable findoid
-
-echo ''
-echo 'Build complete.'
-echo ''
 
 ./sanoid --version
 echo ''
