@@ -15,7 +15,8 @@
           "sanoid-portable.pl",
           "sanoid_source/sanoid",
           "sanoid_source/syncoid",
-          "sanoid_source/findoid"
+          "sanoid_source/findoid",
+          "versions.json"
         ]
       }
     }
