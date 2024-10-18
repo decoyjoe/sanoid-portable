@@ -11,6 +11,7 @@
         "Capture-Tiny-0.48.tar.gz"
       ],
       "zip_extra_files": {
+        ".": ["versions.json"],
         "bin": [
           "sanoid-portable.pl",
           "sanoid_source/sanoid",

@@ -21,7 +21,7 @@ fi
 # Update package lists to ensure packages are up to date
 $SUDO apt-get update
 
-$SUDO apt-get install -y build-essential wget git unzip zip
+$SUDO apt-get install -y build-essential wget git unzip zip jq
 
 echo ''
 echo 'All necessary dependencies have been installed.'

@@ -2,13 +2,12 @@
 
 set -euo pipefail
 
-# Portable self-contained Perl
-# https://github.com/G4Vi/Perl-Dist-APPerl/releases
-APPERL_VERSION=0.6.1
+SANOID_VERSION=$(jq -r '.Sanoid' versions.json)
+PACKAGING_REVISION=$(jq -r '.PackagingRevision' versions.json)
+APPERL_VERSION=$(jq -r '.APPerl' versions.json)
+SANOID_PORTABLE_VERSION="${SANOID_VERSION}-${PACKAGING_REVISION}"
 
-# Sanoid
-# https://github.com/jimsalterjrs/sanoid/releases
-SANOID_VERSION=2.2.0
+echo "Building sanoid-portable version ${SANOID_PORTABLE_VERSION}, based on Sanoid version ${SANOID_VERSION} and APPerl version ${APPERL_VERSION}"
 
 repo_root="$(realpath "$(dirname "$0")")"
 
@@ -60,6 +59,7 @@ ln -s perl.com apperlm
 
 cp "${repo_root}/apperl-project.json" .
 cp "${repo_root}/sanoid-portable.pl" .
+cp "${repo_root}/versions.json" .
 
 echo 'Installing build dependencies...'
 ./apperlm install-build-deps
@@ -78,6 +78,8 @@ echo 'Build complete.'
 echo ''
 
 stat sanoid-portable
+echo ''
+
 ./sanoid-portable
 
 # APPerl uses the invoking command name (argv[0]) to determine which internal script to run
