@@ -24,15 +24,15 @@ echo 'Downloading necessary modules...'
 
 # Perl build dependency
 # https://metacpan.org/dist/Module-Build
-wget https://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-0.4234.tar.gz
+wget -q https://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-0.4234.tar.gz
 
 # Sanoid dependency
 # https://metacpan.org/dist/Config-IniFiles
-wget https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/Config-IniFiles-3.000003.tar.gz
+wget -q https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/Config-IniFiles-3.000003.tar.gz
 
 # Sanoid dependency
 ## https://metacpan.org/dist/Capture-Tiny
-wget https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/Capture-Tiny-0.48.tar.gz
+wget -q https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/Capture-Tiny-0.48.tar.gz
 
 echo 'Cloning sanoid repository...'
 rm -rf sanoid_source
@@ -47,7 +47,7 @@ popd > /dev/null
 echo ''
 
 echo 'Downloading APPerl (Actually Portable Perl)...'
-wget -O perl.com "https://github.com/G4Vi/Perl-Dist-APPerl/releases/download/v${APPERL_VERSION}/perl.com"
+wget -q -O perl.com "https://github.com/G4Vi/Perl-Dist-APPerl/releases/download/v${APPERL_VERSION}/perl.com"
 chmod u+x perl.com
 
 echo 'APPerl (perl.com) SHA-256 checksum:'
