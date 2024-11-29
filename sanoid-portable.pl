@@ -5,7 +5,7 @@ use FindBin;
 use Getopt::Long;
 use JSON::PP;
 
-open my $versions_json_file, '<', "$FindBin::Bin/versions.json" or die "Can't open versions.json: $!";
+open my $versions_json_file, '<', "$FindBin::Bin/../lib/versions.json" or die "Can't open versions.json: $!";
 my $versions_json = do { local $/; <$versions_json_file> };
 close $versions_json_file;
 
