@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
@@ -12,13 +12,13 @@ echo "Building sanoid-portable version ${SANOID_PORTABLE_VERSION}, based on Sano
 repo_root="$(realpath "$(dirname "$0")")"
 
 # Cleanup previous artifacts if they exist
-if [ -d build ]; then
-  echo 'Cleaning up previous build...'
-  rm -rf build
+if [ -d output ]; then
+  echo 'Cleaning up previous build output...'
+  rm -rf output
 fi
 
-mkdir build
-pushd build > /dev/null
+mkdir output
+pushd output > /dev/null
 
 echo 'Downloading necessary modules...'
 

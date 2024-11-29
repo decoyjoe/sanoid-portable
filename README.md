@@ -67,7 +67,7 @@ Build the executable:
 
 This script will download and configure APPerl, download necessary Perl modules, and build the portable Sanoid binary.
 
-The executable gets built to `build/sanoid-portable`.
+The executable gets built to `output/sanoid-portable`.
 
 ## License
 

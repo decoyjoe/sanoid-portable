@@ -12,6 +12,8 @@ jobs:
         run: ./init.sh
       - name: Build sanoid-portable binary
         run: |
+          # Build on Ubuntu
+
           # Add a new binfmt entry that matches APE's (Actually Portable Executable)'s
           # magic number to avoid execution by Ubuntu's built-in "MZ" binfmt
           # interpreter which "helpfully" tries to run the binary with WINE.
