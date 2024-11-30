@@ -86,6 +86,8 @@ echo ''
 ln -s sanoid-portable sanoid
 ln -s sanoid-portable syncoid
 ln -s sanoid-portable findoid
+ln -s sanoid-portable missing-script
+./missing-script
 
 ./sanoid --version
 echo ''
