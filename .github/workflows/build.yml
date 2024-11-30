@@ -41,20 +41,37 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ needs.build.outputs.artifact_name }}
-      - name: Test sanoid-portable
+      - name: Test in Ubuntu
         run: |
           # Test on Ubuntu
 
           sudo update-binfmts --install APE /bin/sh --magic MZqFpD
+
           chmod +x sanoid-portable
+          ln -s sanoid-portable sanoid
+          ln -s sanoid-portable syncoid
+          ln -s sanoid-portable findoid
 
           ./sanoid-portable -h
-
-          ln -s sanoid-portable sanoid
           ./sanoid -h
-
-          ln -s sanoid-portable syncoid
           ./syncoid -h
-
-          ln -s sanoid-portable findoid
           ./findoid -h
+
+          ls -lah
+
+          echo 'SHA-256 checksum:'
+          sha256sum sanoid-portable
+      - name: Test in FreeBSD
+        uses: vmactions/freebsd-vm@v1
+        with:
+          usesh: true
+          run: |
+            ./sanoid-portable -h
+            ./sanoid -h
+            ./syncoid -h
+            ./findoid -h
+
+            ls -lah
+
+            echo 'SHA-256 checksum:'
+            sha256sum sanoid-portable
