@@ -5,6 +5,8 @@ on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      artifact_name: ${{ steps.set_artifact_name.outputs.artifact_name }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -17,6 +19,42 @@ jobs:
           # Add a new binfmt entry that matches APE's (Actually Portable Executable)'s
           # magic number to avoid execution by Ubuntu's built-in "MZ" binfmt
           # interpreter which "helpfully" tries to run the binary with WINE.
-          sudo sh -c "echo ':APE:M::MZqFpD::/bin/sh:' >/proc/sys/fs/binfmt_misc/register"
+          sudo update-binfmts --install APE /bin/sh --magic MZqFpD
 
           ./build.sh
+      - name: Set artifact name
+        id: set_artifact_name
+        run: echo "artifact_name=sanoid-portable.${{ github.sha }}.${{ github.run_number }}" >> $GITHUB_OUTPUT
+      - name: Upload built sanoid-portable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.set_artifact_name.outputs.artifact_name }}
+          path: output/sanoid-portable
+          if-no-files-found: error
+          retention-days: 5
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download sanoid-portable artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build.outputs.artifact_name }}
+      - name: Test sanoid-portable
+        run: |
+          # Test on Ubuntu
+
+          sudo update-binfmts --install APE /bin/sh --magic MZqFpD
+          chmod +x sanoid-portable
+
+          ./sanoid-portable -h
+
+          ln -s sanoid-portable sanoid
+          ./sanoid -h
+
+          ln -s sanoid-portable syncoid
+          ./syncoid -h
+
+          ln -s sanoid-portable findoid
+          ./findoid -h
