@@ -77,32 +77,9 @@ echo ''
 echo 'Build complete.'
 echo ''
 
-stat sanoid-portable
+echo 'Testing...'
 echo ''
 
-./sanoid-portable
-
-# APPerl uses the invoking command name (argv[0]) to determine which internal script to run
-ln -s sanoid-portable sanoid
-ln -s sanoid-portable syncoid
-ln -s sanoid-portable findoid
-
-./sanoid --version
-echo ''
-
-echo 'Testing execution of sanoid...'
-./sanoid --help
-echo ''
-
-echo 'Testing execution of syncoid...'
-./syncoid --help
-echo ''
-
-echo 'Testing execution of findoid...'
-./findoid --help
-echo ''
-
-echo 'SHA-256 checksum:'
-sha256sum sanoid-portable
+"${repo_root}/test.sh"
 
 popd > /dev/null

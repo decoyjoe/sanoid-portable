@@ -58,8 +58,5 @@ if ($print_version_only) {
     exit 0;
 }
 
-if ($print_help) {
-    print "$all_versions\n";
-    print $usage;
-    exit 0;
-}
+print $usage;
+print "$all_versions\n";

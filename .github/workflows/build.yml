@@ -18,7 +18,7 @@ jobs:
 
           # Add a new binfmt entry that matches APE's (Actually Portable Executable)'s
           # magic number to avoid execution by Ubuntu's built-in "MZ" binfmt
-          # interpreter which "helpfully" tries to run the binary with WINE.
+          # interpreter which "helpfully" tries to run the binary with Wine.
           sudo update-binfmts --install APE /bin/sh --magic MZqFpD
 
           ./build.sh
@@ -37,41 +37,27 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Download sanoid-portable artifact
         uses: actions/download-artifact@v4
         with:
           name: ${{ needs.build.outputs.artifact_name }}
-      - name: Test in Ubuntu
+      - name: Test on Ubuntu
         run: |
           # Test on Ubuntu
 
+          # Add a new binfmt entry that matches APE's (Actually Portable Executable)'s
+          # magic number to avoid execution by Ubuntu's built-in "MZ" binfmt
+          # interpreter which "helpfully" tries to run the binary with Wine.
           sudo update-binfmts --install APE /bin/sh --magic MZqFpD
 
-          chmod +x sanoid-portable
-          ln -s sanoid-portable sanoid
-          ln -s sanoid-portable syncoid
-          ln -s sanoid-portable findoid
-
-          ./sanoid-portable -h
-          ./sanoid -h
-          ./syncoid -h
-          ./findoid -h
-
-          ls -lah
-
-          echo 'SHA-256 checksum:'
-          sha256sum sanoid-portable
+          ./test.sh
       - name: Test in FreeBSD
         uses: vmactions/freebsd-vm@v1
         with:
           usesh: true
+          prepare: |
+            pkg install -y jq
           run: |
-            ./sanoid-portable -h
-            ./sanoid -h
-            ./syncoid -h
-            ./findoid -h
-
-            ls -lah
-
-            echo 'SHA-256 checksum:'
-            sha256sum sanoid-portable
+            ./test.sh
