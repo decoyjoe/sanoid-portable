@@ -1,13 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
 # Identify the operating system from /etc/os-release
-OS=$(grep ^ID= /etc/os-release | cut -d '=' -f 2 | tr -d '"')
+source /etc/os-release
+OS=$ID
 
-# Check if the OS is Debian or a Debian derivative (like Ubuntu)
+# The only build OS's we've tested.
 if [[ "$OS" != 'debian' && "$OS" != 'ubuntu' ]]; then
-  echo 'Error: This script is intended only for Debian-based systems.'
+  echo "Error: Unsupported operating system. This script only supports Debian and Ubuntu."
   exit 1
 fi
 

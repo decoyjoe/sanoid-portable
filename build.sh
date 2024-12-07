@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
@@ -12,27 +12,27 @@ echo "Building sanoid-portable version ${SANOID_PORTABLE_VERSION}, based on Sano
 repo_root="$(realpath "$(dirname "$0")")"
 
 # Cleanup previous artifacts if they exist
-if [ -d build ]; then
-  echo 'Cleaning up previous build...'
-  rm -rf build
+if [ -d output ]; then
+  echo 'Cleaning up previous build output...'
+  rm -rf output
 fi
 
-mkdir build
-pushd build > /dev/null
+mkdir output
+pushd output > /dev/null
 
 echo 'Downloading necessary modules...'
 
 # Perl build dependency
 # https://metacpan.org/dist/Module-Build
-wget https://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-0.4234.tar.gz
+wget -q https://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-0.4234.tar.gz
 
 # Sanoid dependency
 # https://metacpan.org/dist/Config-IniFiles
-wget https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/Config-IniFiles-3.000003.tar.gz
+wget -q https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/Config-IniFiles-3.000003.tar.gz
 
 # Sanoid dependency
 ## https://metacpan.org/dist/Capture-Tiny
-wget https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/Capture-Tiny-0.48.tar.gz
+wget -q https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/Capture-Tiny-0.48.tar.gz
 
 echo 'Cloning sanoid repository...'
 rm -rf sanoid_source
@@ -47,7 +47,7 @@ popd > /dev/null
 echo ''
 
 echo 'Downloading APPerl (Actually Portable Perl)...'
-wget -O perl.com "https://github.com/G4Vi/Perl-Dist-APPerl/releases/download/v${APPERL_VERSION}/perl.com"
+wget -q -O perl.com "https://github.com/G4Vi/Perl-Dist-APPerl/releases/download/v${APPERL_VERSION}/perl.com"
 chmod u+x perl.com
 
 echo 'APPerl (perl.com) SHA-256 checksum:'
@@ -77,32 +77,9 @@ echo ''
 echo 'Build complete.'
 echo ''
 
-stat sanoid-portable
+echo 'Testing...'
 echo ''
 
-./sanoid-portable
-
-# APPerl uses the invoking command name (argv[0]) to determine which internal script to run
-ln -s sanoid-portable sanoid
-ln -s sanoid-portable syncoid
-ln -s sanoid-portable findoid
-
-./sanoid --version
-echo ''
-
-echo 'Testing execution of sanoid...'
-./sanoid --help
-echo ''
-
-echo 'Testing execution of syncoid...'
-./syncoid --help
-echo ''
-
-echo 'Testing execution of findoid...'
-./findoid --help
-echo ''
-
-echo 'SHA-256 checksum:'
-sha256sum sanoid-portable
+"${repo_root}/test.sh"
 
 popd > /dev/null
