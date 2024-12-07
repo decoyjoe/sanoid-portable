@@ -42,7 +42,8 @@ Invoke the symbolic link:
 ./findoid --help
 ```
 
-Refer to the [Sanoid documentation](https://github.com/jimsalterjrs/sanoid) for configuration instructions.
+Now you just need to configure Sanoid to do what you need it to do. Refer to the [Sanoid
+documentation](https://github.com/jimsalterjrs/sanoid) for configuration instructions.
 
 ### Compatibility Notes
 
