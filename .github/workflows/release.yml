@@ -13,6 +13,8 @@ jobs:
     needs: call-build-workflow
     permissions:
       contents: write
+      id-token: write
+      attestations: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -52,6 +54,10 @@ jobs:
 
           echo 'Ok: sanoid-portable version matches GitHub release version.'
           sha256sum sanoid-portable
+
+      - uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: sanoid-portable
 
       - name: Upload sanoid-portable to GitHub Release assets
         uses: softprops/action-gh-release@v2
