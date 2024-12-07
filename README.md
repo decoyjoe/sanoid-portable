@@ -109,6 +109,15 @@ This script will download and configure APPerl, download necessary Perl modules,
 
 The executable gets built to `output/sanoid-portable`.
 
+## Credits
+
+We stand on the shoulders of giants.
+
+- [jimsalterjrs/sanoid](https://github.com/jimsalterjrs/sanoid) for the excellent ZFS snapshot management tool.
+- [G4Vi/Perl-Dist-APPerl](https://github.com/G4Vi/Perl-Dist-APPerl) for the tooling to create single-binary portable
+  Perl distributions.
+- [jart/cosmopolitan](https://github.com/jart/cosmopolitan) for making truly cross-platform portable binaries possible.
+
 ## License
 
 This project is licensed under the GPL v3.0 license - see the [LICENSE](LICENSE) file for details.
