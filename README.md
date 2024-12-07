@@ -42,13 +42,53 @@ Invoke the symbolic link:
 ./findoid --help
 ```
 
-Refer to the [Sanoid documentation](https://github.com/jimsalterjrs/sanoid) for configuration instructions.
+Now you just need to configure Sanoid to do what you need it to do. Refer to the [Sanoid
+documentation](https://github.com/jimsalterjrs/sanoid) for configuration instructions.
 
-### Important Compatibility Note
+### Compatibility Notes
 
-sanoid-portable ***must*** be run from a Thompson Shell-compatible shell such as `bash` ([due to a limitation of
-APPerl](https://computoid.com/APPerl/)). It is *not* compatible with shells like `zsh` or `fish`, which will fail to run
-sanoid-portable with an error such as: `zsh: exec format error: sanoid-portable`.
+#### ZSH / fish
+
+If you're using the ZSH or fish shells and you get an error such as `zsh: exec format error: sanoid-portable`, then you
+need to update your shell. This issue is patched in [ZSH
+5.9+](https://github.com/zsh-users/zsh/commit/326d9c203b3980c0f841bc62b06e37134c6e51ea) and [fish
+3.3.0+](https://github.com/fish-shell/fish-shell/commit/0048730a67a5e70cafce1fb725a4b28001d924ac).
+
+If you can't update your shell, then you ***must*** run sanoid-portable from a Thompson Shell-compatible shell such as
+`bash`.
+
+#### Ubuntu
+
+On Ubuntu you may get an error such as `run-detectors: unable to find an interpreter` or `File does not contain a valid
+CIL image.` This is because Ubuntu's built-in "MZ" binfmt interpreter "helpfully" tries to run the binary with Wine.
+
+You have two options to fix this:
+
+- [***Assimilate***](https://github.com/jart/cosmopolitan/blob/3.9.7/tool/cosmocc/README.md#installation) the
+  sanoid-portable binary to transform it into a native ELF binary at the expense of making it no longer portable, i.e.
+  it will henceforth only run on Linux platforms:
+
+    ```console
+    sh ./sanoid-portable --assimilate # Transforms the binary into ELF
+    ./sanoid-portable --help
+    ```
+
+- OR
+
+- Add a new binfmt entry that matches APE's ([Actually Portable Executable](https://justine.lol/ape.html))'s magic number to avoid execution by Ubuntu's built-in "MZ" binfmt interpreter:
+
+    ```console
+    sudo update-binfmts --install APE /bin/sh --magic MZqFpD
+    ./sanoid-portable --help
+    ```
+
+#### Windows Subsystem for Linux (WSL)
+
+In WSL you need to disable the [`WSLInterop`](https://learn.microsoft.com/en-us/windows/wsl/filesystems#disable-interoperability) binfmt interpreter that's used to launch Windows binaries from Linux:
+
+```console
+sudo sh -c 'echo 0 > $(ls /proc/sys/fs/binfmt_misc/WSLInterop*)'
+```
 
 ## Developing
 
@@ -68,6 +108,15 @@ Build the executable:
 This script will download and configure APPerl, download necessary Perl modules, and build the portable Sanoid binary.
 
 The executable gets built to `output/sanoid-portable`.
+
+## Credits
+
+We stand on the shoulders of giants.
+
+- [jimsalterjrs/sanoid](https://github.com/jimsalterjrs/sanoid) for the excellent ZFS snapshot management tool.
+- [G4Vi/Perl-Dist-APPerl](https://github.com/G4Vi/Perl-Dist-APPerl) for the tooling to create single-binary portable
+  Perl distributions.
+- [jart/cosmopolitan](https://github.com/jart/cosmopolitan) for making truly cross-platform portable binaries possible.
 
 ## License
 
