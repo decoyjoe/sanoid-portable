@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       artifact_name: ${{ steps.set_artifact_name.outputs.artifact_name }}
     steps:
@@ -29,6 +29,7 @@ jobs:
           # Add a new binfmt entry that matches APE's (Actually Portable Executable)'s
           # magic number to avoid execution by Ubuntu's built-in "MZ" binfmt
           # interpreter which "helpfully" tries to run the binary with Wine.
+          sudo apt install -y binfmt-support
           sudo update-binfmts --install APE /bin/sh --magic MZqFpD
 
           ./build.sh
@@ -47,7 +48,7 @@ jobs:
 
   test:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -64,6 +65,7 @@ jobs:
           # Add a new binfmt entry that matches APE's (Actually Portable Executable)'s
           # magic number to avoid execution by Ubuntu's built-in "MZ" binfmt
           # interpreter which "helpfully" tries to run the binary with Wine.
+          sudo apt install -y binfmt-support
           sudo update-binfmts --install APE /bin/sh --magic MZqFpD
 
           ./test.sh

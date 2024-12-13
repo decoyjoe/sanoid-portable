@@ -9,7 +9,7 @@ jobs:
     uses: ./.github/workflows/build.yml
 
   release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: call-build-workflow
     permissions:
       contents: write
@@ -38,6 +38,7 @@ jobs:
 
       - name: Assert sanoid-portable version matches GitHub Release version
         run: |
+          sudo apt install -y binfmt-support
           sudo update-binfmts --install APE /bin/sh --magic MZqFpD
 
           sudo chmod +x sanoid-portable
