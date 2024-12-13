@@ -42,6 +42,7 @@ jobs:
           sudo update-binfmts --install APE /bin/sh --magic MZqFpD
 
           sudo chmod +x sanoid-portable
+
           sanoid_version=$(./sanoid-portable --version)
           release_version="${{ github.event.release.tag_name }}"
 

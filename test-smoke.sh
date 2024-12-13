@@ -6,7 +6,7 @@ set -eu
 output_dir=$(pwd)
 
 # Optionally pass in the output directory
-# Usage: test.sh [output-directory]
+# Usage: test-smoke.sh [output-directory]
 if [ $# -gt 0 ] && [ -n "${1}" ]; then
   output_dir=$(realpath "${1}")
 fi

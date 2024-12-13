@@ -80,6 +80,6 @@ echo ''
 echo 'Testing...'
 echo ''
 
-"${repo_root}/test.sh"
+"${repo_root}/test-smoke.sh"
 
 popd > /dev/null
