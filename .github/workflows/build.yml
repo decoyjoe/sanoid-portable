@@ -44,7 +44,7 @@ jobs:
           name: ${{ steps.set_artifact_name.outputs.artifact_name }}
           path: output/sanoid-portable
           if-no-files-found: error
-          retention-days: 5
+          retention-days: 1
 
   test:
     needs: build
