@@ -43,6 +43,11 @@ echo "Checking out Sanoid version \"${SANOID_VERSION}\""
 pushd sanoid_source > /dev/null
 git -c advice.detachedHead=false checkout "v${SANOID_VERSION}"
 git log -1
+
+echo 'Applying custom patches to sanoid scripts to support bundling in APPerl binary...'
+for tool in sanoid syncoid findoid; do
+    patch < "${repo_root}/patches/${tool}.patch"
+done
 popd > /dev/null
 echo ''
 
@@ -80,6 +85,6 @@ echo ''
 echo 'Testing...'
 echo ''
 
-"${repo_root}/test.sh"
+"${repo_root}/test-smoke.sh"
 
 popd > /dev/null

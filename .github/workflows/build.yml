@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       artifact_name: ${{ steps.set_artifact_name.outputs.artifact_name }}
     steps:
@@ -26,9 +26,12 @@ jobs:
         run: |
           # Build on Ubuntu
 
+          set -e
+
           # Add a new binfmt entry that matches APE's (Actually Portable Executable)'s
           # magic number to avoid execution by Ubuntu's built-in "MZ" binfmt
           # interpreter which "helpfully" tries to run the binary with Wine.
+          sudo apt install -y binfmt-support
           sudo update-binfmts --install APE /bin/sh --magic MZqFpD
 
           ./build.sh
@@ -43,11 +46,11 @@ jobs:
           name: ${{ steps.set_artifact_name.outputs.artifact_name }}
           path: output/sanoid-portable
           if-no-files-found: error
-          retention-days: 5
+          retention-days: 1
 
   test:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -61,18 +64,29 @@ jobs:
         run: |
           # Test on Ubuntu
 
-          # Add a new binfmt entry that matches APE's (Actually Portable Executable)'s
-          # magic number to avoid execution by Ubuntu's built-in "MZ" binfmt
-          # interpreter which "helpfully" tries to run the binary with Wine.
-          sudo update-binfmts --install APE /bin/sh --magic MZqFpD
+          set -e
 
-          ./test.sh
+          # Test the assimiate workaround here
+          sudo chmod +x sanoid-portable
+          sh ./sanoid-portable --assimilate
+
+          ./test-smoke.sh
 
       - name: Test in FreeBSD
         uses: vmactions/freebsd-vm@v1
         with:
           usesh: true
           prepare: |
-            pkg install -y jq
+            pkg install -y bash jq wget
           run: |
-            ./test.sh
+            set -e
+
+            echo 'Begin smoke tests...'
+            ./test-smoke.sh
+            echo 'Completed smoke tests.'
+
+            echo ''
+
+            echo 'Begin integration tests...'
+            ./test-integration.sh
+            echo 'Completed integration tests.'
