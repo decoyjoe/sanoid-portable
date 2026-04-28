@@ -4,7 +4,7 @@
       "desc": "Portable sanoid binary",
       "base": "full",
       "dest": "sanoid-portable",
-      "default_script": "/zip/bin/sanoid-portable.pl",
+      "default_script": "/zip/bin/sanoid-portable-ape.pl",
       "install_modules": [
         "Module-Build-0.4234.tar.gz",
         "Config-IniFiles-3.000003.tar.gz",
@@ -12,13 +12,14 @@
       ],
       "zip_extra_files": {
         "bin": [
-          "sanoid-portable.pl",
+          "sanoid-portable-ape.pl",
           "sanoid_source/sanoid",
           "sanoid_source/syncoid",
           "sanoid_source/findoid"
         ],
         "lib": [
-          "versions.json"
+          "versions.json",
+          "SanoidPortable"
         ]
       }
     }

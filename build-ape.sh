@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+#
+# Build the APE (Actually Portable Executable) flavor of sanoid-portable.
+# The output is a single x86_64 binary that runs on Linux and FreeBSD via
+# Cosmopolitan / APPerl. Run this on a Debian/Ubuntu host (see init.sh).
+# For the macOS arm64 flavor, see build-arm.sh.
 
 set -euo pipefail
 
@@ -46,7 +51,7 @@ git log -1
 
 echo 'Applying custom patches to sanoid scripts to support bundling in APPerl binary...'
 for tool in sanoid syncoid findoid; do
-    patch < "${repo_root}/patches/${tool}.patch"
+    patch < "${repo_root}/ape-patches/${tool}.patch"
 done
 popd > /dev/null
 echo ''
@@ -63,8 +68,9 @@ echo ''
 ln -s perl.com apperlm
 
 cp "${repo_root}/apperl-project.json" .
-cp "${repo_root}/sanoid-portable.pl" .
+cp "${repo_root}/sanoid-portable-ape.pl" .
 cp "${repo_root}/versions.json" .
+cp -a "${repo_root}/SanoidPortable" .
 
 echo 'Installing build dependencies...'
 ./apperlm install-build-deps
